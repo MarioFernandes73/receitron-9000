@@ -1,10 +1,14 @@
-var express = require('express');
-var app = express();
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 3000;
+const initializeDatabase = require('./dbs')
+const routes = require('./routes')
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
+initializeDatabase().then(dbs => {
+  routes(app, dbs).listen(port, () => console.log('Listening on port: ' + port))
+}).catch(err => {
+  console.error('Failed to make all database connections!')
+  console.error(err)
+  process.exit(1)
+})
