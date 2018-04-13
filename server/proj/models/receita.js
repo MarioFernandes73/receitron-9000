@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var mongoosePaginate = require('mongoose-paginate');
 
 var ReceitaSchema = new Schema({
     nome: String,
@@ -18,5 +19,7 @@ var ReceitaSchema = new Schema({
     restricoes: [],
     tempoPreparacao: String
 }, { collection: 'pingo_doce' });
+
+ReceitaSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Receita', ReceitaSchema);

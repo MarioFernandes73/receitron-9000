@@ -3,7 +3,7 @@ import { Directive, HostListener } from '@angular/core';
 /**
 * Allows the sidebar to be toggled via click.
 */
-/*@Directive({
+@Directive({
   selector: '.sidebartoggler',
 })
 export class SidebarToggleDirective {
@@ -18,7 +18,7 @@ export class SidebarToggleDirective {
   			document.querySelector('body').classList.add('mini-sidebar');
   		}
   	}
-}*/
+}
 
 @Directive({
   selector: '.nav-toggler',
