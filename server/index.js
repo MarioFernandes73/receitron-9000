@@ -14,6 +14,8 @@ var base = require('./proj/routes/baseRoute.js');
 app.use('/', base);
 var user = require('./proj/routes/userRoutes.js');
 app.use('/api/user', user);
+var receita = require('./proj/routes/receitaRoutes.js');
+app.use('/api/receita', receita);
 
 // database connection   : mongodb://<dbuser>:<dbpassword>@ds161336.mlab.com:61336/receita-api
 mongoose.connect('mongodb://makeorbrake:r00t@ds247078.mlab.com:47078/receitas');

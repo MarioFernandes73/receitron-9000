@@ -1,12 +1,10 @@
-
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ReceitaSchema = new Schema({
     nome: String,
     imageUrl: String,
-    preparacao: String[],
+    preparacao: [],
     dificuldade: String,
     dose: String,
     ingredientes: [
@@ -17,8 +15,8 @@ var ReceitaSchema = new Schema({
         }
     ],
     descricao: String,
-    restricoes: String[],
+    restricoes: [],
     tempoPreparacao: String
-});
+}, { collection: 'pingo_doce' });
 
 module.exports = mongoose.model('Receita', ReceitaSchema);
