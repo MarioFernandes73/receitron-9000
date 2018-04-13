@@ -32,15 +32,16 @@ router.get('/:user_id', function (req, res) {
 
 /* POST new user - /api/user */
 router.post('/register', function (req, res) {
-    var user = new User();
-    user.name = req.body.name;
-    user.password = req.body.password;
-    user.email = req.body.email;
-    user.role = req.body.role;
-    user.save(function (err) {
-        if (err) res.send(err);
-        res.json({ message: 'User created!' });
+    let username = req.params["username"];
+    let user = new User();
+    user.name = req.body["username"];
+    user.save(function(err){
+        if(err){
+            return res.send(err);
+        }
+        return res.json({"status":200, "message":"User saved"});
     })
 });
+
 
 module.exports = router;
