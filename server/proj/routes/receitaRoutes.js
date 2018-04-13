@@ -31,7 +31,7 @@ router.get('/page/:page', function(req, res){
         if(err){
             return res.send(error);
         }
-        return res.send(resData);
+        return res.send(result);
     });
 })
 

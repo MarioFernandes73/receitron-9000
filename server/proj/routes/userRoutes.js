@@ -1,5 +1,6 @@
 var express = require('express');
 var User = require('../models/user.js')
+var Receita = require('../models/receita.js')
 var router = express.Router();
 var app = require('../../index');
 
@@ -42,6 +43,42 @@ router.post('/register', function (req, res) {
         return res.json({"status":200, "message":"User saved"});
     })
 });
+
+router.post('/addFavourite', function(req, res){
+    User.find({name:req.body["username"]}, function(err, userResult){
+        if(err){
+            return res.send(err);
+        }
+        console.log(userResult)
+        if(req.body["receita"]){
+            userResult[0]["receitasFavoritas"].push(req.body["receita"])
+            userResult[0].save(function(err){
+                if(err){
+                    return res.send(err);
+                }
+                return res.json({"status": 200, "message": "Added recipe to user"});
+            })
+        }
+    })
+})
+
+router.post('/addIngrediente', function(req, res){
+    User.find({name:req.body["username"]}, function(err, userResult){
+        if(err){
+            return res.send(err);
+        }
+        console.log(userResult)
+        if(req.body["ingrediente"]){
+            userResult[0]["carrinho"].push(req.body["ingrediente"])
+            userResult[0].save(function(err){
+                if(err){
+                    return res.send(err);
+                }
+                return res.json({"status": 200, "message": "Added ingrediente to user's little car"});
+            })
+        }
+    })
+})
 
 
 module.exports = router;
