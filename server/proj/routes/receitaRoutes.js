@@ -1,8 +1,11 @@
-var isoFunc = require('../middleware/decode.js');
 var express = require('express');
 var Receita = require('../models/receita.js')
 var router = express.Router();
 var app = require('../../index');
+
+//  *******
+//  * GET *
+//  *******
 
 router.get('/',  function (req, res) {
     Receita.find(function(err, result){
@@ -33,8 +36,26 @@ router.get('/page/:page', function(req, res){
     });
 })
 
-function decodeAndReturn(req, res, resData){
-    return res.send(resData);
-}
+
+//  ********
+//  * POST *
+//  ********
+
+
+/* GET receita by ingredient - /api/receita/ingredientes */
+router.post('/ingredients', function (req, res) {
+    var x = req.body["ingredientes"].toString().split(",")
+    var restrictions = [];
+
+    x.forEach(element => {
+        restrictions.push({"ingredientes.desc": { "$regex": element, "$options": "i" }}) 
+    });
+
+    Receita.find({ $and:restrictions  }, function (err, user) {
+        if (err)
+            res.send(err);
+        res.json(user);
+    })
+});
 
 module.exports = router;
