@@ -1,5 +1,6 @@
 var express = require('express');
 var User = require('../models/user.js')
+var Receita = require('../models/receita.js')
 var router = express.Router();
 var app = require('../../index');
 
@@ -32,15 +33,52 @@ router.get('/:user_id', function (req, res) {
 
 /* POST new user - /api/user */
 router.post('/register', function (req, res) {
-    var user = new User();
-    user.name = req.body.name;
-    user.password = req.body.password;
-    user.email = req.body.email;
-    user.role = req.body.role;
-    user.save(function (err) {
-        if (err) res.send(err);
-        res.json({ message: 'User created!' });
+    let username = req.params["username"];
+    let user = new User();
+    user.name = req.body["username"];
+    user.save(function(err){
+        if(err){
+            return res.send(err);
+        }
+        return res.json({"status":200, "message":"User saved"});
     })
 });
+
+router.post('/addFavourite', function(req, res){
+    User.find({name:req.body["username"]}, function(err, userResult){
+        if(err){
+            return res.send(err);
+        }
+        console.log(userResult)
+        if(req.body["receita"]){
+            userResult[0]["receitasFavoritas"].push(req.body["receita"])
+            userResult[0].save(function(err){
+                if(err){
+                    return res.send(err);
+                }
+                return res.json({"status": 200, "message": "Added recipe to user"});
+            })
+        }
+    })
+})
+
+router.post('/addIngrediente', function(req, res){
+    User.find({name:req.body["username"]}, function(err, userResult){
+        if(err){
+            return res.send(err);
+        }
+        console.log(userResult)
+        if(req.body["ingrediente"]){
+            userResult[0]["carrinho"].push(req.body["ingrediente"])
+            userResult[0].save(function(err){
+                if(err){
+                    return res.send(err);
+                }
+                return res.json({"status": 200, "message": "Added ingrediente to user's little car"});
+            })
+        }
+    })
+})
+
 
 module.exports = router;

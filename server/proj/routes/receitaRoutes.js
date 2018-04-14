@@ -3,6 +3,10 @@ var Receita = require('../models/receita.js')
 var router = express.Router();
 var app = require('../../index');
 
+//  *******
+//  * GET *
+//  *******
+
 router.get('/',  function (req, res) {
     Receita.find(function(err, result){
         if(err){
@@ -12,9 +16,46 @@ router.get('/',  function (req, res) {
     })
 });
 
-/* GET user by id - /api/user/{id} */
-router.get('/:user_id', function (req, res) {
+/* GET receita by id - /api/receita/{id} */
+router.get('/:receita_id', function (req, res) {
+    Receita.findById(req.params.receita_id, function(err, result){
+        if(err){
+            return res.send(err);
+        }
+        return res.send(result);
+    })
+});
 
+router.get('/page/:page', function(req, res){
+    let page = req.params["page"];
+    Receita.paginate({}, { page: page, limit: 5 }, function(err, result) {
+        if(err){
+            return res.send(error);
+        }
+        return res.send(result);
+    });
+})
+
+
+//  ********
+//  * POST *
+//  ********
+
+
+/* GET receita by ingredient - /api/receita/ingredientes */
+router.post('/ingredients', function (req, res) {
+    var x = req.body["ingredientes"].toString().split(",")
+    var restrictions = [];
+
+    x.forEach(element => {
+        restrictions.push({"ingredientes.desc": { "$regex": element, "$options": "i" }}) 
+    });
+
+    Receita.find({ $and:restrictions  }, function (err, user) {
+        if (err)
+            res.send(err);
+        res.json(user);
+    })
 });
 
 module.exports = router;

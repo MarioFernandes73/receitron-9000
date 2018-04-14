@@ -10,7 +10,7 @@ const routes: Routes = [
         children: [
             { path: 'starter', loadChildren: './starter/starter.module#StarterModule' },
             { path: 'component', loadChildren: './component/component.module#ComponentsModule' },
-            { path: 'description', component: DescComponent}
+            { path: 'description', component: DescComponent }
         ]
     }
 ];

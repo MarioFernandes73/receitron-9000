@@ -11,8 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "iconv-lite": "^0.4.21",
     "mongodb": "^3.0.6",
     "mongoose": "^5.0.14",
+    "mongoose-paginate": "^5.0.3",
     "morgan": "^1.9.0",
     "nodemon": "^1.17.3"
   }
