@@ -2,12 +2,14 @@ var express = require('express');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var cors = require('cors');
 
 var app = module.exports = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors())
 
 // base setup and app setup
 var base = require('./proj/routes/baseRoute.js');

@@ -7,9 +7,9 @@ var app = require('../../index');
 //  * GET *
 //  *******
 
-router.get('/',  function (req, res) {
-    Receita.find(function(err, result){
-        if(err){
+router.get('/', function (req, res) {
+    Receita.find(function (err, result) {
+        if (err) {
             return res.send(err);
         }
         return res.send(result);
@@ -18,18 +18,18 @@ router.get('/',  function (req, res) {
 
 /* GET receita by id - /api/receita/{id} */
 router.get('/:receita_id', function (req, res) {
-    Receita.findById(req.params.receita_id, function(err, result){
-        if(err){
+    Receita.findById(req.params.receita_id, function (err, result) {
+        if (err) {
             return res.send(err);
         }
         return res.send(result);
     })
 });
 
-router.get('/page/:page', function(req, res){
+router.get('/page/:page', function (req, res) {
     let page = req.params["page"];
-    Receita.paginate({}, { page: page, limit: 5 }, function(err, result) {
-        if(err){
+    Receita.paginate({}, { page: page, limit: 16 }, function (err, result) {
+        if (err) {
             return res.send(error);
         }
         return res.send(result);
@@ -48,10 +48,10 @@ router.post('/ingredients', function (req, res) {
     var restrictions = [];
 
     x.forEach(element => {
-        restrictions.push({"ingredientes.desc": { "$regex": element, "$options": "i" }}) 
+        restrictions.push({ "ingredientes.desc": { "$regex": element, "$options": "i" } })
     });
 
-    Receita.find({ $and:restrictions  }, function (err, result) {
+    Receita.find({ $and: restrictions }, function (err, result) {
         if (err)
             res.send(err);
         res.json(result);
@@ -61,11 +61,40 @@ router.post('/ingredients', function (req, res) {
 
 /* GET receita by dificuldade - /api/receita/dificuldade */
 router.post('/difficulty', function (req, res) {
-    Receita.find({ "dificuldade": req.body["dificuldade"].toString()  }, function (err, result) {
+    Receita.find({ "dificuldade": req.body["dificuldade"].toString() }, function (err, result) {
         if (err)
             res.send(err);
         res.json(result);
     })
 });
+
+router.post('/filtered/all', function (req, res) {
+    filters = req.body;
+    filterBy(filters, req, res);
+})
+
+function filterBy(filter, req, res) {
+    let ingredients = req.body['ingredientes'];
+    if (ingredients) {
+        let restrictions = [];
+        ingredients.forEach(element => {
+            restrictions.push({ "ingredientes.desc": { "$regex": element, "$options": "i" } })
+        });
+
+        if(filter["dificuldade"]){
+            restrictions.push({"dificuldade": { "$regex": filter['dificuldade'], "$options": "i" }})
+        }
+
+        Receita.find({ $and: restrictions }, function (err, result) {
+            if (err)
+                return res.send(err);
+            if (result) {
+                return res.json(result);
+            }
+        })
+    }
+}
+
+
 
 module.exports = router;
