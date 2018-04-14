@@ -17,7 +17,7 @@ router.get('/',  function (req, res) {
 });
 
 /* GET receita by id - /api/receita/{id} */
-router.get('/:receita_id', function (req, res) {
+router.get('/id/:receita_id', function (req, res) {
     Receita.findById(req.params.receita_id, function(err, result){
         if(err){
             return res.send(err);
@@ -36,13 +36,34 @@ router.get('/page/:page', function(req, res){
     });
 })
 
+/* GET all ingredients - /api/receita/ingredients */
+router.get('/ingredients', function (req, res) {
+    Receita.find().distinct("ingredientes.desc", function (err, result) {
+        if (err){
+            res.send(err);
+        }
+        res.json(result);
+    })
+});
+
+/* GET all dificuldades - /api/receita/ingredients */
+router.get('/dificuldade', function (req, res) {
+    Receita.find().distinct("dificuldade", function (err, result) {
+        if (err){
+            res.send(err);
+        }
+        res.json(result);
+    })
+});
+
+
 
 //  ********
 //  * POST *
 //  ********
 
 
-/* GET receita by ingredient - /api/receita/ingredientes */
+/* GET receita by ingredient - /api/receita/ingredients */
 router.post('/ingredients', function (req, res) {
     var x = req.body["ingredientes"].toString().split(",")
     var restrictions = [];
@@ -51,10 +72,20 @@ router.post('/ingredients', function (req, res) {
         restrictions.push({"ingredientes.desc": { "$regex": element, "$options": "i" }}) 
     });
 
-    Receita.find({ $and:restrictions  }, function (err, user) {
+    Receita.find({ $and:restrictions  }, function (err, result) {
         if (err)
             res.send(err);
-        res.json(user);
+        res.json(result);
+    })
+});
+
+
+/* GET receita by dificuldade - /api/receita/dificuldade */
+router.post('/difficulty', function (req, res) {
+    Receita.find({ "dificuldade": req.body["dificuldade"].toString()  }, function (err, result) {
+        if (err)
+            res.send(err);
+        res.json(result);
     })
 });
 
