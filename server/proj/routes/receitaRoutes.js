@@ -106,25 +106,26 @@ router.post('/filtered/all', function (req, res) {
 })
 
 function filterBy(filter, req, res) {
+
     let ingredients = req.body['ingredientes'];
+    let restrictions = [];
     if (ingredients) {
-        let restrictions = [];
         ingredients.forEach(element => {
             restrictions.push({ "ingredientes.desc": { "$regex": element, "$options": "i" } })
         });
-
-        if (filter["dificuldade"]) {
-            restrictions.push({ "dificuldade": { "$regex": filter['dificuldade'], "$options": "i" } })
-        }
-
-        Receita.find({ $and: restrictions }, function (err, result) {
-            if (err)
-                return res.send(err);
-            if (result) {
-                return res.json(result);
-            }
-        })
     }
+
+    if (filter["dificuldade"]) {
+        restrictions.push({ "dificuldade": filter['dificuldade'] })
+    }
+
+    Receita.find({ $and: restrictions }, function (err, result) {
+        if (err)
+            return res.send(err);
+        if (result) {
+            return res.json(result);
+        }
+    })
 }
 
 
@@ -141,13 +142,13 @@ router.post('/calcqt', function (req, res) {
 function calcQuantity(json, desiredQt) {
     var origQt;
     var splitted = json[0]['dose'].split(" ");
-    for(let i = 0; i < splitted.length; i++){
-        if(!isNaN(splitted[i])){
+    for (let i = 0; i < splitted.length; i++) {
+        if (!isNaN(splitted[i])) {
             origQt = splitted[i];
             break;
         }
     }
-    if(origQt == null){
+    if (origQt == null) {
         return json;
     }
     json[0]['ingredientes'].forEach(element => {
