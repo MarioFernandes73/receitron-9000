@@ -1,5 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StarterService } from '../../services/starter.service';
+
 @Component({
 	templateUrl: './starter.component.html',
 	styleUrls: ['./starter.component.css']
@@ -9,19 +11,60 @@ export class StarterComponent implements AfterViewInit {
 	restrictions = [];
 	ingredient = "";
 	restriction = "";
-	recipes = [{name: "recipe 1"},{name: "recipe 2"},{name: "recipe 2"},{name: "recipe 1"},{name: "recipe 2"},{name: "recipe 2"}]; //examples
+	recipes = [{ name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }, { name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }]; //examples
 	number_meals = 1;
 	dificulties = ['fácil', 'média', 'difícil', 'qualquer'];
 	dificulty = 'qualquer';
 
-	constructor(public router: Router) {
+	constructor(public router: Router, private starterService: StarterService) {
+		this.getRecipes();
 	}
 
-	goToDesc() {
+	//GETS
+	getRecipes() {
+		this.starterService.getRecipes().subscribe(
+			data => {
+				this.recipes = data.docs;
+				console.log(data.docs)
+			},
+			err => {
+				console.log(err);
+			});
+	}
+
+	//TODO resolver
+	postFilteredRecipes(){
+		let jsondata : any;
+
+		jsondata = {
+			"ingredientes": this.ingredients,
+			"restricoes": this.restrictions,
+			"dificuldade": this.dificulties
+			//outros?
+		}
+
+		this.starterService.postFilteredRecipes(jsondata).subscribe(
+            data => {
+				alert("xigou")
+				this.recipes = data;
+              //this.navCtrl.pop();
+              //this.notification("Success creating Appointment!");
+            },
+            err => {
+				alert("fodeu")
+              //this.notification("Error creating Appointment!");
+            });
+
+	}
+
+	//BUTTONS
+	goToDesc(id: string) {
 		//vai receber um id
-		this.router.navigate(['/description']);
+		let search: string = '/description/'+id;
+		this.router.navigate([search]);
 	}
 
+	//OUTROS
 	addIngredient() {
 		console.log(this.ingredient);
 		if (this.notIn(this.ingredient, this.ingredients) && this.ingredient != "" &&
@@ -77,4 +120,5 @@ export class StarterComponent implements AfterViewInit {
 	}
 
 	ngAfterViewInit() { }
+
 }
