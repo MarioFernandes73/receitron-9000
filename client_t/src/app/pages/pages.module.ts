@@ -7,11 +7,27 @@ import { NavigationComponent } from '../shared/header-navigation/navigation.comp
 import { SidebarComponent } from '../shared/sidebar/sidebar.component';
 import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 import { DescComponent } from './desc/desc.component';
+import { ProfileComponent } from './profile/profile.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatInputModule} from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSelectModule} from '@angular/material/select';
+
 
 @NgModule({
     imports: [
         CommonModule,
-        PagesRoutingModule
+        PagesRoutingModule,
+        NgbModule,
+        MatTableModule,
+        MatFormFieldModule,
+        MatPaginatorModule,
+        MatInputModule,
+        MatExpansionModule,
+        MatSelectModule
     ],
     declarations: [
         PageComponent,
@@ -19,7 +35,8 @@ import { DescComponent } from './desc/desc.component';
         BreadcrumbComponent,
         SidebarComponent,
         SIDEBAR_TOGGLE_DIRECTIVES,
-        DescComponent
+        DescComponent,
+        ProfileComponent
     ]
 })
 export class PagesModule { }

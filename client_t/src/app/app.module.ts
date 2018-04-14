@@ -9,27 +9,32 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
-
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { StarterService } from './services/starter.service';
+import { DescService } from './services/desc.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
   imports: [
+    NgbModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,   
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    NoopAnimationsModule,
+    NoopAnimationsModule
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  },
+  StarterService,
+  DescService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

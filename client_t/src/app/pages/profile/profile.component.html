@@ -1,0 +1,202 @@
+<div class="row">
+  <div class="col-sm-6 col-md-5  col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="user-profile">
+          <div>
+            <img id="user_image" src="assets/images/users/1.jpg" />
+          </div>
+          <div>
+            <label style="margin: 5%"> Name here </label>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <ul id="sidebarnav">
+            <li class="nav-devider"></li>
+            <li>
+              <a (click)="showFavorites()">
+                <i></i>
+                <span class="hide-menu">Receitas Favoritas</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="showPlanned()">
+                <i></i>
+                <span class="hide-menu">Planeamento</span>
+              </a>
+            </li>
+            <li>
+              <a (click)="showShoppingList()">
+                <i></i>
+                <span class="hide-menu">Lista de Compras</span>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="col">
+    <!-- CONTENT -->
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Favorites -->
+        <div *ngIf="favoritesHidden == false">
+          <div id="favorite">
+            <h1 class="card-title">Receitas Favoritas</h1>
+
+
+            <div class="example-header">
+              <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+              </mat-form-field>
+            </div>
+
+            <div class="example-container">
+
+              <mat-table [dataSource]="dataSource" matSort>
+
+                <ng-container matColumnDef="receipt">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Receita </mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <a (click)="goToDesc()">{{row.name}}</a>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="meals">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Refeições </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.progress}} </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="dificulty">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Dificuldade </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="remove">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <button type="button" class="btn btn-rounded btn-outline-danger">Remover</button>
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                </mat-row>
+              </mat-table>
+
+              <mat-paginator [pageSizeOptions]="[10, 10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+        </div>
+
+        <!-- Planned -->
+        <div *ngIf="plannedHidden == false">
+          <div id="planned">
+            <h1 class="card-title">Planeamento de Refeições</h1>
+
+            <div class="example-header">
+              <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+              </mat-form-field>
+            </div>
+
+            <div class="example-container">
+
+              <mat-table [dataSource]="dataSource" matSort>
+
+                <ng-container matColumnDef="receipt">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Receita </mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <a (click)="goToDesc()">{{row.name}}</a>
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="meals">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Refeições </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.progress}} </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="dificulty">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Dificuldade </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="remove">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <button type="button" class="btn btn-rounded btn-outline-danger">Remover</button>
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                </mat-row>
+              </mat-table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+        </div>
+
+        <!-- ShoppingList -->
+        <div *ngIf="shoppingListHidden == false">
+          <div id="shoppingLista">
+            <h1 class="card-title">Lista de Compras</h1>
+
+            <div class="example-header">
+                <mat-form-field>
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+              </div>
+              
+              <div class="example-container">
+              
+                <mat-table [dataSource]="dataSource" matSort>
+              
+                    <ng-container matColumnDef="ingredient">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Ingrediente </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+                      </ng-container>
+
+                  <ng-container matColumnDef="quantity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Quantidade </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button type="button" class="btn btn-rounded btn-outline-info">-</button>
+                        <label>{{row.progress}}</label>
+                        <button type="button" class="btn btn-rounded btn-outline-info">+</button>
+              
+                    </mat-cell>
+                  </ng-container>
+              
+              
+                  <ng-container matColumnDef="measure">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Medida </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
+                  </ng-container>
+
+                  <ng-container matColumnDef="remove">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                      <mat-cell *matCellDef="let row">
+                          <button type="button" class="btn btn-rounded btn-outline-danger">Remover</button>
+                      </mat-cell>
+                    </ng-container>
+              
+                  <mat-header-row *matHeaderRowDef="shoppingColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: shoppingColumns;">
+                  </mat-row>
+                </mat-table>
+              
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+              </div>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
