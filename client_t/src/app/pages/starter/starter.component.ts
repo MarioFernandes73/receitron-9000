@@ -31,35 +31,53 @@ export class StarterComponent implements AfterViewInit {
 			});
 	}
 
-	//TODO resolver
-	postFilteredRecipes(){
-		let jsondata : any;
+	postFilteredRecipes() {
+		let jsondata: any;
 
-		jsondata = {
-			"ingredientes": this.ingredients,
-			"restricoes": this.restrictions,
-			"dificuldade": "fácil"//this.dificulties
-			//outros?
+		console.log("------")
+		console.log(this.ingredients)
+		console.log(this.restrictions)
+		console.log(this.dificulty)
+		console.log("------")
+
+		var dif_tmp = "qualquer";
+
+		if(this.dificulty == [1,0,0]) dif_tmp = "fácil";
+		else if(this.dificulty == [1,1,0]) dif_tmp = "média";
+		else if(this.dificulty == [1,1,1]) dif_tmp = "difícil";
+
+		if (dif_tmp === "qualquer") {
+			jsondata = {
+				"ingredientes": this.ingredients,
+				"restricoes": this.restrictions,
+			}
+		}
+		else {
+			jsondata = {
+				"ingredientes": this.ingredients,
+				"restricoes": this.restrictions,
+				"dificuldade": dif_tmp
+				//outros?
+			}
 		}
 
 		this.starterService.postFilteredRecipes(jsondata).subscribe(
-            data => {
-				alert("xigou")
+			data => {
 				this.recipes = data;
-              //this.navCtrl.pop();
-              //this.notification("Success creating Appointment!");
-            },
-            err => {
-				alert("fodeu")
-              //this.notification("Error creating Appointment!");
-            });
+				//this.navCtrl.pop();
+				//this.notification("Success creating Appointment!");
+			},
+			err => {
+				console.log(err);
+				//this.notification("Error creating Appointment!");
+			});
 
 	}
 
 	//BUTTONS
 	goToDesc(id: string) {
 		//vai receber um id
-		let search: string = '/description/'+id;
+		let search: string = '/description/' + id;
 		this.router.navigate([search]);
 	}
 

@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
 
 var ReceitaSchema = new Schema({
+    _id:String,
     nome: String,
     imageUrl: String,
     preparacao: [],

@@ -11,8 +11,8 @@ const routes: Routes = [
         children: [
             { path: 'starter', loadChildren: './starter/starter.module#StarterModule' },
             { path: 'component', loadChildren: './component/component.module#ComponentsModule' },
-            { path: 'description', component: DescComponent },
-            { path: 'profile', component: ProfileComponent }
+            { path: 'profile', component: ProfileComponent },
+            { path: 'description/:id', component: DescComponent }
         ]
     }
 ];
