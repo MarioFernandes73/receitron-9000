@@ -47,6 +47,16 @@ router.get('/ingredients', function (req, res) {
     })
 });
 
+/* GET all restricoes - /api/receita/restrictions */
+router.get('/restrictions', function (req, res) {
+    Receita.find().distinct("restricoes", function (err, result) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(result);
+    })
+});
+
 /* GET all dificuldades - /api/receita/ingredients */
 router.get('/dificuldade', function (req, res) {
     Receita.find().distinct("dificuldade", function (err, result) {
