@@ -9,6 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -16,15 +17,16 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
   imports: [
+    NgbModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,   
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    NoopAnimationsModule,
+    NoopAnimationsModule
   ],
   providers: [{
     provide: LocationStrategy,
