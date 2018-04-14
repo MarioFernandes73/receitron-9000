@@ -1,4 +1,3 @@
-var isoFunc = require('../middleware/decode.js');
 var express = require('express');
 var Receita = require('../models/receita.js')
 var router = express.Router();
