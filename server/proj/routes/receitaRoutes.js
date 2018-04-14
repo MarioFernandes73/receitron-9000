@@ -107,6 +107,13 @@ function filterBy(filter, req, res) {
             restrictions.push({"dificuldade": { "$regex": filter['dificuldade'], "$options": "i" }})
         }
 
+        if(filter["restricoes"]){
+            filter["restricoes"].forEach(each =>{
+                console.log(each)
+                restrictions.push({ "restricoes": { "$regex": each, "$options": "i" } })
+            })
+        }
+
         Receita.find({ $and: restrictions }, function (err, result) {
             if (err)
                 return res.send(err);
