@@ -17,7 +17,7 @@ router.get('/',  function (req, res) {
 });
 
 /* GET receita by id - /api/receita/{id} */
-router.get('/:receita_id', function (req, res) {
+router.get('/id/:receita_id', function (req, res) {
     Receita.findById(req.params.receita_id, function(err, result){
         if(err){
             return res.send(err);
@@ -35,6 +35,27 @@ router.get('/page/:page', function(req, res){
         return res.send(result);
     });
 })
+
+/* GET all ingredients - /api/receita/ingredients */
+router.get('/ingredients', function (req, res) {
+    Receita.find().distinct("ingredientes.desc", function (err, result) {
+        if (err){
+            res.send(err);
+        }
+        res.json(result);
+    })
+});
+
+/* GET all dificuldades - /api/receita/ingredients */
+router.get('/dificuldade', function (req, res) {
+    Receita.find().distinct("dificuldade", function (err, result) {
+        if (err){
+            res.send(err);
+        }
+        res.json(result);
+    })
+});
+
 
 
 //  ********
