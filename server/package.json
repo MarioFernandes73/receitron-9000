@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "iconv-lite": "^0.4.21",
     "mongodb": "^3.0.6",
