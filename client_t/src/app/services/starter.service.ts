@@ -16,7 +16,7 @@ export class StarterService {
 
   //get com filtros --> compor
   postFilteredRecipes(data){
-    var url = this.api_endpoint + 'api/receita/filtered';
+    var url = this.api_endpoint + 'api/receita/filtered/all';
     return this.http.post(url,data).map(res => res.json());
   }
 
