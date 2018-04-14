@@ -32,35 +32,47 @@ export class StarterComponent implements AfterViewInit {
 			});
 	}
 
-	//TODO resolver
-	postFilteredRecipes(){
-		let jsondata : any;
+	postFilteredRecipes() {
+		let jsondata: any;
 
-		jsondata = {
-			"ingredientes": this.ingredients,
-			"restricoes": this.restrictions,
-			"dificuldade": this.dificulties
-			//outros?
+		console.log("------")
+		console.log(this.ingredients)
+		console.log(this.restrictions)
+		console.log(this.dificulty)
+		console.log("------")
+
+		if (this.dificulty === "qualquer") {
+			jsondata = {
+				"ingredientes": this.ingredients,
+				"restricoes": this.restrictions,
+			}
+		}
+		else {
+			jsondata = {
+				"ingredientes": this.ingredients,
+				"restricoes": this.restrictions,
+				"dificuldade": this.dificulty
+				//outros?
+			}
 		}
 
 		this.starterService.postFilteredRecipes(jsondata).subscribe(
-            data => {
-				alert("xigou")
+			data => {
 				this.recipes = data;
-              //this.navCtrl.pop();
-              //this.notification("Success creating Appointment!");
-            },
-            err => {
-				alert("fodeu")
-              //this.notification("Error creating Appointment!");
-            });
+				//this.navCtrl.pop();
+				//this.notification("Success creating Appointment!");
+			},
+			err => {
+				console.log(err);
+				//this.notification("Error creating Appointment!");
+			});
 
 	}
 
 	//BUTTONS
 	goToDesc(id: string) {
 		//vai receber um id
-		let search: string = '/description/'+id;
+		let search: string = '/description/' + id;
 		this.router.navigate([search]);
 	}
 
