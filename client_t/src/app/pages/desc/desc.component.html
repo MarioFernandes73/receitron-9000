@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-3">
+    <div>
+      <!--ir buscar a imagem-->
+      <img src="assets/images/food/sushi.jpeg" alt="food" class="img-beauty">
+    </div>
+    <button class="btn btn-block btn-success">Adicionar a Favoritos</button> <!--TODO-->
+  </div>
+  <div class="col-9">
+    <div class="card">
+      <div class="card-body">
+        <h2><b>{{json.nome}}</b></h2>
+        <p><i>{{json.descricao}}</i></p>
+        <div class="row" style="padding-bottom: 5px; padding-top: 15px;">
+          <div class="col-4">
+            <h5 style="display: inline">Dificuldade : </h5>
+            <p style="display: inline">{{json.dificuldade}}</p>
+          </div>
+          <div class="col-4">
+            <h5 style="display: inline">Tempo de Preparação : </h5>
+            <p style="display: inline">{{json.tempoPreparacao}}</p>
+          </div>
+          <!--eventualmente: dar para mudar as doses-->
+          <div class="col-4">
+            <h5 style="display: inline">Doses : </h5>
+            <p style="display: inline">{{json.dose}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <h5 style="display: inline">Restrições Alimentares : </h5>
+            <p style="display: inline">{{json.restricoes}}</p>
+          </div>
+        </div>
+        <hr style="padding-bottom: 10px; padding-top: 10px" >
+        <h4>Ingredientes</h4>
+        <div style="padding-left: 30px;">
+          <table class="table" >
+            <tbody>
+              <tr *ngFor="let ing of json.ingredientes">
+                <td class="col-2">{{ing.quantidade}} {{ing.unidade}}</td>
+                <td class="col-10">{{ing.desc}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-warning">Adicionar a lista de compras</button> <!--TODO-->
+        </div>
+        <hr style="padding-bottom: 10px; padding-top: 10px" >
+        <h4>Preparação</h4>
+        <ul *ngFor="let prep of json.preparacao; let i = index" style="list-style-type: none;">
+          <li>{{i+1}}. {{prep}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

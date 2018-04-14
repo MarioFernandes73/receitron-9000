@@ -1,0 +1,14 @@
+
+.example-full-width {
+width: 100%;
+}
+
+.ingredients-btn {
+  margin: 3px;
+}
+
+.restrictions-btn{
+  margin: 3px;
+  background-color: red;
+  outline-color: red;
+}

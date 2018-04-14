@@ -1,10 +1,116 @@
-<div class="row">
-    <div class="col-12">
+<div id="search">
+
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Pesquisa Avançada
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div id="advancedSearch" class="container">
+                <div class="row">
+                    <!-- Ingredients -->
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Ingredient" [value]="ingredient" (input)="ingredient = $event.target.value">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2" style="float:right">
+                                <button type="button" class="btn btn-rounded btn-info" (click)="addIngredient()">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngFor='let i of ingredients; trackBy: index;'>
+                                <button type="button" class="btn btn-rounded btn-info ingredients-btn" (mouseleave)="mouseLeftIngredient(i)" (mouseenter)="mouseEnterIngredient(i)"
+                                    (click)="removeIngredient(i)">{{i}}</button>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Restrictions -->
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Restriction" [value]="restriction" (input)="restriction = $event.target.value">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2" style="float:right">
+                                <button type="button" class="btn btn-rounded btn-info " (click)="addRestriction()">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngFor='let r of restrictions; trackBy: index;'>
+                                <button type="button" class="restrictions-btn btn btn-rounded btn-info" (click)="removeRestriction(r)">{{r}}</button>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 5px">
+                    <!-- Number of meals -->
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="number" placeholder="Número de Refeições" [(ngModel)]="number_meals">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dificulty -->
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select placeholder="Dificuldade">
+                                        <mat-option *ngFor="let d of dificulties" [value]=d ificulty>
+                                            {{ d }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Search -->
+                    <div class="col-md-2">
+                        <button type="button" style="width:100%" class="btn btn-rounded btn-info">Pesquisar</button>
+                    </div>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+
+<div id="recipes" class="row card-group" style="margin-top:3%;">
+    <div class="col-lg-3 col-md-6 img-responsive" *ngFor='let r of recipes; let i = index'>
+        <!-- Card -->
         <div class="card">
+            <img class="card-img-top img-responsive" src="assets/images/big/img1.jpg" alt="Card image cap">
             <div class="card-body">
-                {{subtitle}}
-                <button type="button" class="btn btn-primary" [routerLink]="['../Description']">Go To Description</button>
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="row">
+                    <div class="col">
+                                        <button class="btn btn-primary" (click)="goToDesc()">Description</button>
+
+                    </div>
+
+                    <button style="float:left" type="button" class="btn btn-danger btn-circle">
+                        <i class="fa fa-heart"></i>
+                    </button>
+                </div>
             </div>
         </div>
+        <!-- Card -->
+
     </div>
+
 </div>

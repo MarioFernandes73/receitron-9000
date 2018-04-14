@@ -3,6 +3,10 @@ var Receita = require('../models/receita.js')
 var router = express.Router();
 var app = require('../../index');
 
+//  *******
+//  * GET *
+//  *******
+
 router.get('/',  function (req, res) {
     Receita.find(function(err, result){
         if(err){
@@ -32,8 +36,36 @@ router.get('/page/:page', function(req, res){
     });
 })
 
-function decodeAndReturn(req, res, resData){
-    return res.send(resData);
-}
+
+//  ********
+//  * POST *
+//  ********
+
+
+/* GET receita by ingredient - /api/receita/ingredients */
+router.post('/ingredients', function (req, res) {
+    var x = req.body["ingredientes"].toString().split(",")
+    var restrictions = [];
+
+    x.forEach(element => {
+        restrictions.push({"ingredientes.desc": { "$regex": element, "$options": "i" }}) 
+    });
+
+    Receita.find({ $and:restrictions  }, function (err, result) {
+        if (err)
+            res.send(err);
+        res.json(result);
+    })
+});
+
+
+/* GET receita by dificuldade - /api/receita/dificuldade */
+router.post('/difficulty', function (req, res) {
+    Receita.find({ "dificuldade": req.body["dificuldade"].toString()  }, function (err, result) {
+        if (err)
+            res.send(err);
+        res.json(result);
+    })
+});
 
 module.exports = router;
