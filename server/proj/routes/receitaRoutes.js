@@ -19,8 +19,8 @@ router.get('/', function (req, res) {
 /* GET receita by id - /api/receita/{id} */
 
 router.get('/id/:receita_id', function (req, res) {
-    Receita.find({"_id": req.params['receita_id']}, function(err, result){
-        if(err){
+    Receita.find({ "_id": req.params['receita_id'] }, function (err, result) {
+        if (err) {
             return res.send(err);
         }
         return res.json(result);
@@ -40,7 +40,7 @@ router.get('/page/:page', function (req, res) {
 /* GET all ingredients - /api/receita/ingredients */
 router.get('/ingredients', function (req, res) {
     Receita.find().distinct("ingredientes.desc", function (err, result) {
-        if (err){
+        if (err) {
             res.send(err);
         }
         res.json(result);
@@ -50,7 +50,7 @@ router.get('/ingredients', function (req, res) {
 /* GET all dificuldades - /api/receita/ingredients */
 router.get('/dificuldade', function (req, res) {
     Receita.find().distinct("dificuldade", function (err, result) {
-        if (err){
+        if (err) {
             res.send(err);
         }
         res.json(result);
@@ -103,8 +103,8 @@ function filterBy(filter, req, res) {
             restrictions.push({ "ingredientes.desc": { "$regex": element, "$options": "i" } })
         });
 
-        if(filter["dificuldade"]){
-            restrictions.push({"dificuldade": { "$regex": filter['dificuldade'], "$options": "i" }})
+        if (filter["dificuldade"]) {
+            restrictions.push({ "dificuldade": { "$regex": filter['dificuldade'], "$options": "i" } })
         }
 
         Receita.find({ $and: restrictions }, function (err, result) {
@@ -117,6 +117,38 @@ function filterBy(filter, req, res) {
     }
 }
 
+
+router.post('/calcqt', function (req, res) {
+    Receita.find({ "_id": req.body['id'] }, function (err, result) {
+        if (err) {
+            return res.send(err);
+        }
+        result = calcQuantity(result, req.body['qt'])
+        return res.send(result);
+    })
+});
+
+function calcQuantity(json, desiredQt) {
+    var origQt;
+    var splitted = json[0]['dose'].split(" ");
+    for(let i = 0; i < splitted.length; i++){
+        if(!isNaN(splitted[i])){
+            origQt = splitted[i];
+            break;
+        }
+    }
+    if(origQt == null){
+        return json;
+    }
+    json[0]['ingredientes'].forEach(element => {
+        var qt = element['quantidade']
+        if (!isNaN(qt)) {
+            element['quantidade'] = Math.ceil(parseFloat(qt) * parseFloat(desiredQt) / parseFloat(origQt))
+        }
+    });
+
+    return json;
+}
 
 
 module.exports = router;
