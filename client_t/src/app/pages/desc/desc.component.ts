@@ -10,13 +10,26 @@ import { DescService } from '../../services/desc.service';
 export class DescComponent implements OnInit {
 
   json: any;
+  id: string;
 
   constructor(private router: Router, private descService: DescService) {
-    let id: string = this.router.url.split('/')[2];
-    this.json = this.descService.getRecipe(id); 
+    this.id = this.router.url.split('/')[2]; 
   }
 
+  getRecipe(id: string) {
+		this.descService.getRecipe(id).subscribe(
+			data => {
+        console.log(data[0]);
+        this.json = data[0];
+        console.log(this.json.nome)
+			},
+			err => {
+				console.log(err);
+			});
+	}
+
   ngOnInit() {
+    this.getRecipe(this.id);
   }
 
 }
