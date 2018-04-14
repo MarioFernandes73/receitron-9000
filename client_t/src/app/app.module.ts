@@ -10,6 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
 
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +23,8 @@ import { SpinnerComponent } from './shared/spinner.component';
     BrowserAnimationsModule,   
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NoopAnimationsModule,
   ],
   providers: [{
     provide: LocationStrategy,
