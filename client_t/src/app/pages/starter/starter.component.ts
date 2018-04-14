@@ -9,7 +9,11 @@ export class StarterComponent implements AfterViewInit {
 	restrictions = [];
 	ingredient = "";
 	restriction = "";
-	recipes = [{name: "recipe 1"},{name: "recipe 2"},{name: "recipe 2"},{name: "recipe 1"},{name: "recipe 2"},{name: "recipe 2"}];
+	recipes = [{name: "recipe 1"},{name: "recipe 2"},{name: "recipe 2"},{name: "recipe 1"},{name: "recipe 2"},{name: "recipe 2"}]; //examples
+	number_meals = 1;
+	dificulties = ['fácil', 'média', 'difícil', 'qualquer'];
+	dificulty = 'qualquer';
+
 	constructor() {
 	}
 
