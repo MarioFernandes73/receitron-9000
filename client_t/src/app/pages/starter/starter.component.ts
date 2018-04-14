@@ -13,8 +13,7 @@ export class StarterComponent implements AfterViewInit {
 	restriction = "";
 	recipes = [{ name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }, { name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }]; //examples
 	number_meals = 1;
-	dificulties = ['fácil', 'média', 'difícil', 'qualquer'];
-	dificulty = 'qualquer';
+	dificulty = [1,0,0];
 
 	constructor(public router: Router, private starterService: StarterService) {
 		this.getRecipes();
@@ -39,7 +38,7 @@ export class StarterComponent implements AfterViewInit {
 		jsondata = {
 			"ingredientes": this.ingredients,
 			"restricoes": this.restrictions,
-			"dificuldade": this.dificulties
+			"dificuldade": "fácil"//this.dificulties
 			//outros?
 		}
 

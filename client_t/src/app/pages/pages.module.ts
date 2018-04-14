@@ -15,6 +15,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatPaginatorModule,
         MatInputModule,
         MatExpansionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatIconModule
     ],
     declarations: [
         PageComponent,

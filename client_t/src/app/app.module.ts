@@ -13,6 +13,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { StarterService } from './services/starter.service';
 import { DescService } from './services/desc.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DescService } from './services/desc.service';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    HttpClientModule
   ],
   providers: [{
     provide: LocationStrategy,
