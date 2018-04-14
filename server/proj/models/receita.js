@@ -18,7 +18,7 @@ var ReceitaSchema = new Schema({
     descricao: String,
     restricoes: [],
     tempoPreparacao: String
-}, { collection: 'pingo_doce' });
+}, { collection: 'pingo_doce_correto' });
 
 ReceitaSchema.plugin(mongoosePaginate);
 
