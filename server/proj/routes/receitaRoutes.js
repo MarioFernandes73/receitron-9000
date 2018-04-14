@@ -19,12 +19,11 @@ router.get('/', function (req, res) {
 /* GET receita by id - /api/receita/{id} */
 
 router.get('/id/:receita_id', function (req, res) {
-    Receita.findById(req.params.receita_id, function(err, result){
+    Receita.find({"_id": req.params['receita_id']}, function(err, result){
         if(err){
-
             return res.send(err);
         }
-        return res.send(result);
+        return res.json(result);
     })
 });
 
