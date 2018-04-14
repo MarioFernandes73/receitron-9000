@@ -1,11 +1,59 @@
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                {{subtitle}}
-                
-                
+<div id="search">
+    <form class="search_recipes">
+        <!-- Add ingredients -->
+        <div class="row">
+            <label>Ingredientes: </label>
+            <mat-form-field class="example-full-width">
+                <input matInput  [value]="ingredient" (input)="ingredient = $event.target.value">
+            </mat-form-field>
+            <button type="button" class="btn btn-rounded btn-info" (click)="addIngredient()">Adicionar</button>
+            <div *ngFor='let i of ingredients; trackBy: index;'>
+                    <button type="button" class="btn btn-rounded btn-info" 
+                    (mouseleave)="mouseLeftIngredient(i)" (mouseenter)="mouseEnterIngredient(i)" (click)="removeIngredient(i)">{{i}}</button>
             </div>
         </div>
-    </div>
+        <!-- Restrictions -->
+        <div class="row">
+                <label>Restrições: </label>
+                <mat-form-field class="example-full-width">
+                    <input matInput  [value]="restriction" (input)="restriction = $event.target.value">
+                </mat-form-field>
+                <button type="button" class="btn btn-rounded btn-info" (click)="addRestriction()">Adicionar</button>
+                <div *ngFor='let r of restrictions; trackBy: index;'>
+                        <button type="button" class="btn btn-rounded btn-info" (click)="removeRestriction(r)">{{r}}</button>
+                       <!-- (mouseleave)="mouseLeftIngredient(r)" (mouseenter)="mouseEnterIngredient(r)" (click)="removeIngredient(r)">{{i}}</button>-->
+                </div>
+        </div>
+        <!-- Number of meals and dificulty -->
+        <div class="row">
+                <label>Nº de pessoas:</label>
+                <input placeholder="number_meals" type="number">
+                <label>Dificuldade:</label>
+                <!-- <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Basic demo</h3>
+                        <h6 class="card-subtitle">This is basic demo for rating {{currentRate}}</h6>
+                        <ngb-rating [(rate)]="currentRate"></ngb-rating>
+                        
+                        <div class="m-t-10">Rate: <b>{{currentRate}}</b></div>
+                        </div>
+                </div> -->
+            </div>
+    </form>
+</div>
+
+<div id="recipes" class="row card-group" style="margin-top:3%;">
+        <div class="col-lg-3 col-md-6 img-responsive" *ngFor='let r of recipes; let i = index'>
+                <!-- Card -->
+                <div class="card">
+                    <img class="card-img-top img-responsive" src="assets/images/big/img1.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <!-- Card -->
+            
+        </div>   
 </div>
