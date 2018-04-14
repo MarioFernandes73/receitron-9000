@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class DescService {
 
-  api_endpoint: string = 'http://132631a9.ngrok.io/';
+  api_endpoint: string = environment.API_URL;
 
   constructor(private http: Http) { 
     
