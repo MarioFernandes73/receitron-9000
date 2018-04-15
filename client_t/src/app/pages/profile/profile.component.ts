@@ -30,8 +30,8 @@ export class ProfileComponent implements OnInit {
   constructor(public router: Router) {
     //ALTERAR DEPOIS
     // Create 100 users
-     const users: UserData[] = [];
-     for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
+    const users: UserData[] = [];
+    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
@@ -92,6 +92,26 @@ export class ProfileComponent implements OnInit {
     //Fetch Shopping list
   }
 
+  addQuantity(n, i) {
+    //TODO
+    //Update
+    if (+n + i > 0)
+      return +n + i;
+    else
+      return n;
+  }
+
+  remove(){
+    //TODO
+  }
+
+  getDificulty(d) {
+    if (d == '') return [0, 0, 0];
+    else if (d == 'fácil') return [1, 0, 0];
+    else if (d == 'média') return [1, 1, 0];
+    else if (d == 'difícil') return [1, 1, 1];
+  }
+
 
 }
 /** Builds and returns a new User. */
@@ -109,8 +129,7 @@ function createNewUser(id: number): UserData {
 }
 
 /** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
+const COLORS = ['fácil', 'média', 'difícil', ''];
 const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
   'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
   'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
