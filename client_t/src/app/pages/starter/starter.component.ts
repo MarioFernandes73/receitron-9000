@@ -112,6 +112,44 @@ export class StarterComponent implements AfterViewInit {
 		this.router.navigate([search]);
 	}
 
+	addToShoppingCart(ingredients: Array<JSON>){
+		var tempIngredientes = []
+		ingredients.forEach(element => {
+			tempIngredientes.push(element['desc'])
+		});
+		console.log(tempIngredientes)
+		var jsonData = {
+			"username":"Apu",
+			"ingrediente":tempIngredientes
+		};
+		this.starterService.addToShoppingCart(jsonData).subscribe(
+			data => {
+				console.log(data)
+			},
+			err => {
+				console.log(err);
+				//this.notification("Error creating Appointment!");
+			});;
+	}
+
+
+	addToFav(id: string){
+		var jsonData = {
+			"username":"Apu",
+			"receita":id
+		};
+		this.starterService.addToFav(jsonData).subscribe(
+			data => {
+				console.log(data)
+				//this.notification("Success creating Appointment!");
+			},
+			err => {
+				console.log(err);
+				//this.notification("Error creating Appointment!");
+			});
+	}
+
+
 	//OUTROS
 	addIngredient() {
 		console.log(this.ingredient);

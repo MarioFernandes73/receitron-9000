@@ -117,7 +117,7 @@
                 <p class="card-text">{{r.descricao}}</p>
                 <div class="row">
                     <div class="col-4">
-                        <button type="button" class="round_btn btn btn-info btn-circle">
+                        <button type="button" (click)="addToShoppingCart(r.ingredientes)" class="round_btn btn btn-info btn-circle">
                             <i class="fa fa-check"></i>
                         </button>
                     </div>
@@ -127,7 +127,7 @@
                         </button>
                     </div>
                     <div class="col-4">
-                        <button type="button " class="round_btn btn btn-danger btn-circle ">
+                        <button type="button " (click)="addToFav(r._id)" class="round_btn btn btn-danger btn-circle ">
                             <i class="fa fa-heart "></i>
                         </button>
                     </div>
