@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DescService } from '../../services/desc.service';
+import { StarterService } from '../../services/starter.service';
 
 @Component({
   selector: 'app-desc',
@@ -14,7 +15,7 @@ export class DescComponent implements OnInit {
   n_meals = 0;
   n_meals_origin = 0;
 
-  constructor(private router: Router, private descService: DescService) {
+  constructor(private router: Router, private descService: DescService, private starterService: StarterService) {
     this.id = this.router.url.split('/')[2]; 
   }
 
@@ -30,6 +31,42 @@ export class DescComponent implements OnInit {
 			err => {
 				console.log(err);
 			});
+  }
+
+  addToFav(){
+    var jsonData = {
+        "username":"Apu",
+        "receita":this.json._id
+    };
+
+    this.starterService.addToFav(jsonData).subscribe(
+        data => {
+            console.log(data)
+            //this.notification("Success creating Appointment!");
+        },
+        err => {
+            console.log(err);
+            //this.notification("Error creating Appointment!");
+        });
+  }
+
+  addToShop(){
+    var tempIngredientes = []
+    this.json.ingredientes.forEach(element => {
+        tempIngredientes.push(element['desc'])
+    });
+    console.log(tempIngredientes)
+    var jsonData = {
+        "username":"Apu",
+        "ingrediente":tempIngredientes
+    };
+    this.starterService.addToShoppingCart(jsonData).subscribe(
+        data => {
+            console.log(data)
+        },
+        err => {
+            console.log(err);
+        });;
   }
   
   getConverstion(quant){
