@@ -21,7 +21,7 @@ export class StarterComponent implements AfterViewInit {
 		this.getRecipes();
 
 		this.getRestrictions();
-3
+
 	}
 
 	getRestrictions(){
@@ -40,6 +40,10 @@ export class StarterComponent implements AfterViewInit {
 		this.starterService.getRecipes(this.page += 1).subscribe(
 			data => {
 				data.docs.forEach(receita => {
+					receita["descricao"] = receita["descricao"].substring(0, 100) + "...";
+					if(receita["nome"].length > 30){
+						receita["nome"] = receita["nome"].substring(0, 30) + "...";
+					}
 					this.recipes.push(receita);
 				})
 				console.log(data.docs)
