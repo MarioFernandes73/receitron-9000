@@ -92,6 +92,27 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+  addQuantity(n, i) {
+    //TODO
+    //Update
+    if (+n + i > 0)
+      return +n + i;
+    else
+      return n;
+  }
+
+  remove(){
+    //TODO
+  }
+
+  
+  getDificulty(d) {
+    if (d == '') return [0, 0, 0];
+    else if (d == 'Fácil') return [1, 0, 0];
+    else if (d == 'Média') return [1, 1, 0];
+    else if (d == 'Difícil') return [1, 1, 1];
+  }
+
   getFavorites() {
     this.pservice.getFav().subscribe(
       data => {
@@ -115,5 +136,4 @@ export class ProfileComponent implements OnInit {
     //TODO
     //Fetch Planned
   }*/
-
 }

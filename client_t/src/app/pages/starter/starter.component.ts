@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StarterService } from '../../services/starter.service';
+import { HostListener } from "@angular/core";
 
 @Component({
 	templateUrl: './starter.component.html',
@@ -8,22 +9,43 @@ import { StarterService } from '../../services/starter.service';
 })
 export class StarterComponent implements AfterViewInit {
 	ingredients = [];
-	restrictions = [];
 	ingredient = "";
-	restriction = "";
-	recipes = [{ name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }, { name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }]; //examples
+	restrictionList = [];
+	currentRestricion = "";
+	recipes = [];
 	number_meals = 1;
-	dificulty = [0,0,0];
+	dificulty = [0, 0, 0];
+	page = 0;
 
 	constructor(public router: Router, private starterService: StarterService) {
 		this.getRecipes();
+
+		this.getRestrictions();
+
 	}
+
+	getRestrictions(){
+		this.starterService.getRestrictions().subscribe(
+			data => {
+				this.restrictionList = data;
+			},
+			err => {
+				console.log(err)
+			});
+	}
+
 
 	//GETS
 	getRecipes() {
-		this.starterService.getRecipes().subscribe(
+		this.starterService.getRecipes(this.page += 1).subscribe(
 			data => {
-				this.recipes = data.docs;
+				data.docs.forEach(receita => {
+					receita["descricao"] = receita["descricao"].substring(0, 100) + "...";
+					if(receita["nome"].length > 30){
+						receita["nome"] = receita["nome"].substring(0, 30) + "...";
+					}
+					this.recipes.push(receita);
+				})
 				console.log(data.docs)
 			},
 			err => {
@@ -33,33 +55,42 @@ export class StarterComponent implements AfterViewInit {
 
 	postFilteredRecipes() {
 		let jsondata: any;
-
 		console.log("------")
 		console.log(this.ingredients)
-		console.log(this.restrictions)
+		console.log(this.currentRestricion)
 		console.log(this.dificulty)
 		console.log("------")
 
 		var dif_tmp = "qualquer";
 
-		if(this.dificulty == [1,0,0]) dif_tmp = "fácil";
-		else if(this.dificulty == [1,1,0]) dif_tmp = "média";
-		else if(this.dificulty == [1,1,1]) dif_tmp = "difícil";
+		if (this.dificulty[2] == 1) {
+			dif_tmp = "Difícil"
+		} else {
+			if (this.dificulty[1] == 1) {
+				dif_tmp = "Média"
+			} else {
+				if (this.dificulty[0] == 1) {
+					dif_tmp = "Fácil"
+				}
+			}
+		}
 
-		if (dif_tmp === "qualquer") {
+		if (dif_tmp == "qualquer") {
 			jsondata = {
 				"ingredientes": this.ingredients,
-				"restricoes": this.restrictions,
+				"restricoes": [this.currentRestricion],
 			}
 		}
 		else {
 			jsondata = {
 				"ingredientes": this.ingredients,
-				"restricoes": this.restrictions,
+				"restricoes": [this.currentRestricion],
 				"dificuldade": dif_tmp
 				//outros?
 			}
 		}
+
+		console.log(jsondata)
 
 		this.starterService.postFilteredRecipes(jsondata).subscribe(
 			data => {
@@ -81,11 +112,49 @@ export class StarterComponent implements AfterViewInit {
 		this.router.navigate([search]);
 	}
 
+	addToShoppingCart(ingredients: Array<JSON>){
+		var tempIngredientes = []
+		ingredients.forEach(element => {
+			tempIngredientes.push(element['desc'])
+		});
+		console.log(tempIngredientes)
+		var jsonData = {
+			"username":"Apu",
+			"ingrediente":tempIngredientes
+		};
+		this.starterService.addToShoppingCart(jsonData).subscribe(
+			data => {
+				console.log(data)
+			},
+			err => {
+				console.log(err);
+				//this.notification("Error creating Appointment!");
+			});;
+	}
+
+
+	addToFav(id: string){
+		var jsonData = {
+			"username":"Apu",
+			"receita":id
+		};
+		this.starterService.addToFav(jsonData).subscribe(
+			data => {
+				console.log(data)
+				//this.notification("Success creating Appointment!");
+			},
+			err => {
+				console.log(err);
+				//this.notification("Error creating Appointment!");
+			});
+	}
+
+
 	//OUTROS
 	addIngredient() {
 		console.log(this.ingredient);
 		if (this.notIn(this.ingredient, this.ingredients) && this.ingredient != "" &&
-			this.notIn(this.ingredient, this.restrictions)) {
+			this.notIn(this.ingredient, [this.currentRestricion])) {
 			console.log("ingredient added: " + this.ingredient);
 			this.ingredients.push(this.ingredient);
 			this.ingredient = "";
@@ -99,7 +168,7 @@ export class StarterComponent implements AfterViewInit {
 		}
 		console.log("Removed ingredient: " + ingredient);
 	}
-
+/*
 	addRestriction() {
 		console.log(this.restriction);
 		if (this.notIn(this.restriction, this.ingredients) && this.restriction != "" &&
@@ -117,7 +186,7 @@ export class StarterComponent implements AfterViewInit {
 		}
 		console.log("Removed restriction: " + restriction);
 	}
-
+*/
 	mouseEnterIngredient(ingredient) {
 		console.log("ENTER ELEMENT");
 		//(<HTMLInputElement>document.getElementById(ingredient)).value = "Apagar";

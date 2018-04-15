@@ -34,7 +34,7 @@
                     </div>
                     <!-- Restrictions -->
                     <div class="col-md-6">
-                        <div class="row">
+                       <!-- <div class="row">
                             <div class="col-md-8">
                                 <mat-form-field class="example-full-width">
                                     <input matInput placeholder="Restrições" [value]="restriction" (input)="restriction = $event.target.value">
@@ -49,7 +49,15 @@
                                 <button type="button" class="restrictions-btn btn btn-rounded btn-info" (click)="removeRestriction(r)">{{r}}</button>
                                 <br>
                             </div>
-                        </div>
+                        </div>-->
+
+                        <mat-form-field class="example-full-width">
+                            <mat-select placeholder="Restrições" [(ngModel)]="currentRestricion">
+                                <mat-option *ngFor="let food of restrictionList" [value]="food">
+                                    {{ food }}
+                                  </mat-option>
+                            </mat-select>
+                          </mat-form-field>
                     </div>
                 </div>
 
@@ -108,16 +116,18 @@
                 <h4 class="card-title">{{r.nome}}</h4>
                 <p class="card-text">{{r.descricao}}</p>
                 <div class="row">
-                    <div  class="col-4">
-                        <button type="button" class="round_btn btn btn-info btn-circle"><i class="fa fa-check"></i>
+                    <div class="col-4">
+                        <button type="button" (click)="addToShoppingCart(r.ingredientes)" class="round_btn btn btn-info btn-circle">
+                            <i class="fa fa-check"></i>
                         </button>
                     </div>
                     <div class="col-4">
-                        <button type="button" (click)="goToDesc(r._id)" class=" round_btn btn btn-primary btn-circle"><i class="fa fa-list"></i>
+                        <button type="button" (click)="goToDesc(r._id)" class=" round_btn btn btn-primary btn-circle">
+                            <i class="fa fa-list"></i>
                         </button>
                     </div>
                     <div class="col-4">
-                        <button type="button " class="round_btn btn btn-danger btn-circle ">
+                        <button type="button " (click)="addToFav(r._id)" class="round_btn btn btn-danger btn-circle ">
                             <i class="fa fa-heart "></i>
                         </button>
                     </div>
@@ -128,5 +138,14 @@
         <!-- Card -->
 
     </div>
+</div>
+
+<div class="col-md-12">
+
+    <button style="
+        position: relative;
+        left: 50%;
+        margin-left: -100px;" 
+    class="btn btn-info" (click)="getRecipes()">Load More...</button>
 
 </div>

@@ -43,7 +43,7 @@ router.get('/ingredients', function (req, res) {
         if (err) {
             res.send(err);
         }
-        res.json(result);
+        return res.json(result);
     })
 });
 
@@ -51,9 +51,9 @@ router.get('/ingredients', function (req, res) {
 router.get('/restrictions', function (req, res) {
     Receita.find().distinct("restricoes", function (err, result) {
         if (err) {
-            res.send(err);
+            return res.send(err);
         }
-        res.json(result);
+        return res.json(result);
     })
 });
 
@@ -61,9 +61,9 @@ router.get('/restrictions', function (req, res) {
 router.get('/dificuldade', function (req, res) {
     Receita.find().distinct("dificuldade", function (err, result) {
         if (err) {
-            res.send(err);
+           return res.send(err);
         }
-        res.json(result);
+        return res.json(result);
     })
 });
 
@@ -85,8 +85,8 @@ router.post('/ingredients', function (req, res) {
 
     Receita.find({ $and: restrictions }, function (err, result) {
         if (err)
-            res.send(err);
-        res.json(result);
+            return res.send(err);
+        return res.json(result);
     })
 });
 
@@ -95,8 +95,8 @@ router.post('/ingredients', function (req, res) {
 router.post('/difficulty', function (req, res) {
     Receita.find({ "dificuldade": req.body["dificuldade"].toString() }, function (err, result) {
         if (err)
-            res.send(err);
-        res.json(result);
+            return res.send(err);
+        return res.json(result);
     })
 });
 
@@ -106,6 +106,7 @@ router.post('/filtered/all', function (req, res) {
 })
 
 function filterBy(filter, req, res) {
+    console.log(req.body)
 
     let ingredients = req.body['ingredientes'];
     let restrictions = [];
@@ -131,6 +132,7 @@ function filterBy(filter, req, res) {
         if (err)
             return res.send(err);
         if (result) {
+            console.log(result.length)
             return res.json(result);
         }
     })

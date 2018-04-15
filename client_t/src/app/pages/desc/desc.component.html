@@ -16,6 +16,12 @@
               <button style="width: 100%" class="btn btn-block btn-outline-primary"><i class="fa fa-check"></i>Lista de Compras</button>
             </div>
         </div>
+        <div class="row" style="margin:3%">
+            <mat-form-field style="width:100%">
+                <input  matInput type="number" placeholder="Número de Refeições" [(ngModel)]="n_meals" min="1">
+            </mat-form-field>
+        </div>
+       
           <!--TODO-->
         <!--TODO-->
         <hr style="padding-bottom: 10px; padding-top: 10px">
@@ -24,8 +30,11 @@
         <div style="padding-left: 30px;">
           <table class="table">
             <tbody>
-              <tr class="row" *ngFor="let ing of json.ingredientes">
-                <td class="col-4">{{ing.quantidade}} {{ing.unidade}}</td>
+              <tr class="row" *ngFor="let ing of json.ingredientes" ng-bind="n_meals" ng-bind="n_meals_origin">
+                <td *ngIf="ing.quantidade!='qb'" class="col-4">
+                  {{ing.quantidade*n_meals/n_meals_origin}} {{ing.unidade}}
+                </td>
+                <td *ngIf="ing.quantidade=='qb'" class="col-4">{{ing.quantidade}} {{ing.unidade}}</td>
                 <td class="col-8">{{ing.desc}}</td>
               </tr>
             </tbody>

@@ -10,8 +10,8 @@ export class StarterService {
   constructor(private http: Http) { }
 
   //Get todas as receitas
-  getRecipes() {
-    var url = this.api_endpoint + 'api/receita/page/1';
+  getRecipes(page:number) {
+    var url = this.api_endpoint + 'api/receita/page/' + page;
     return this.http.get(url).map(res => res.json());
   }
 
@@ -20,5 +20,22 @@ export class StarterService {
     var url = this.api_endpoint + 'api/receita/filtered/all';
     return this.http.post(url, data).map(res => res.json());
   }
+
+  getRestrictions() {
+    var url = this.api_endpoint + 'api/receita/restrictions';
+    return this.http.get(url).map(res => res.json())
+  }
+
+  addToShoppingCart(jsonData){
+    var url = this.api_endpoint + 'api/user/addIngrediente';
+    return this.http.post(url,jsonData).map(res => res.json());
+  }
+
+
+  addToFav(jsonData){
+    var url = this.api_endpoint + 'api/user/addFavourite';
+    return this.http.post(url,jsonData).map(res => res.json());
+  }
+
 
 }

@@ -16,7 +16,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -29,7 +29,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatInputModule,
         MatExpansionModule,
         MatSelectModule,
-        MatIconModule
+        MatIconModule,
+        FormsModule
     ],
     declarations: [
         PageComponent,

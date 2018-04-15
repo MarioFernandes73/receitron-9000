@@ -72,7 +72,20 @@
 
                 <ng-container matColumnDef="dificulty">
                   <mat-header-cell *matHeaderCellDef mat-sort-header> Dificuldade </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.dificuldade}} </mat-cell>
+                  <!--<mat-cell *matCellDef="let row"> {{row.dificuldade}} </mat-cell>-->
+                  <mat-cell *matCellDef="let row">
+                    <div class="row">
+                      <div class="dificulty" *ngIf="getDificulty(row.dificuldade)[0]==1">
+                        <img src="assets/images/icon/chef_active.png" height="30" width="30">
+                      </div>
+                      <div class="dificulty" *ngIf="getDificulty(row.dificuldade)[1]==1">
+                        <img src="assets/images/icon/chef_active.png" height="30" width="30">
+                      </div>
+                      <div class="dificulty" *ngIf="getDificulty(row.dificuldade)[2]==1">
+                        <img src="assets/images/icon/chef_active.png" height="30" width="30">
+                      </div>
+                    </div>
+                  </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="remove">
@@ -116,14 +129,32 @@
 
                 <ng-container matColumnDef="meals">
                   <mat-header-cell *matHeaderCellDef mat-sort-header> Refeições </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.progress}} </mat-cell>
+                 
+                  <mat-cell *matCellDef="let row"> 
+                      <button type="button" class="btn btn-rounded btn-outline-info" (click)="row.progress = addQuantity(row.progress,-1)">-</button>
+                    {{row.progress}} 
+                    <button type="button" class="btn btn-rounded btn-outline-info" (click)="row.progress = addQuantity(row.progress,1)">+</button>
+
+                  </mat-cell>
                 </ng-container>
 
 
                 <ng-container matColumnDef="dificulty">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Dificuldade </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
-                </ng-container>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Dificuldade </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                      <div class="row">
+                        <div class="dificulty" *ngIf="getDificulty(row.color)[0]==1">
+                          <img src="assets/images/icon/chef_active.png" height="30" width="30">
+                        </div>
+                        <div class="dificulty" *ngIf="getDificulty(row.color)[1]==1">
+                          <img src="assets/images/icon/chef_active.png" height="30" width="30">
+                        </div>
+                        <div class="dificulty" *ngIf="getDificulty(row.color)[2]==1">
+                          <img src="assets/images/icon/chef_active.png" height="30" width="30">
+                        </div>
+                      </div>
+                    </mat-cell>
+                  </ng-container>
 
                 <ng-container matColumnDef="remove">
                   <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
