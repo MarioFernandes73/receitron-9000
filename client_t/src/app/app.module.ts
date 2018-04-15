@@ -13,6 +13,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { StarterService } from './services/starter.service';
 import { DescService } from './services/desc.service';
+import { ProfileService } from './services/profile.service';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
@@ -35,7 +36,8 @@ import {HttpClientModule} from '@angular/common/http';
     useClass: HashLocationStrategy
   },
   StarterService,
-  DescService
+  DescService,
+  ProfileService,
   ],
   bootstrap: [AppComponent]
 })

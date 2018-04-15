@@ -4,40 +4,39 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
-
+import { ProfileService } from '../../services/profile.service';
+import { DescService } from '../../services/desc.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
+
 export class ProfileComponent implements OnInit {
   favoritesHidden = false;
-  plannedHidden = true;
+  //plannedHidden = true;
   shoppingListHidden = true;
 
   displayedColumns = ['receipt', 'meals', 'dificulty', 'remove'];
-  shoppingColumns = ['ingredient', 'quantity', 'measure', 'remove'];
-  dataSource: MatTableDataSource<UserData>;
+  shoppingColumns = ['ingredient', 'remove'];
+  dataSource: Array<any>;
 
-  favorites = [];
-  planned = [];
-  shopping_list = [];
+  recipes;
+  ingredients: Array<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public router: Router) {
-    //ALTERAR DEPOIS
-    // Create 100 users
-     const users: UserData[] = [];
-     for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
+  constructor(private router: Router, private pservice: ProfileService, private dservice: DescService) {
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
   }
 
   ngOnInit() {
+    this.favoritesHidden = false;
+    //this.plannedHidden = true;
+    this.shoppingListHidden = true;
+    this.getFavorites();
   }
 
   /**
@@ -45,33 +44,68 @@ export class ProfileComponent implements OnInit {
    * be able to query its view for the initialized paginator and sort.
    */
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    //this.dataSource.paginator = this.paginator;
     //this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    //this.dataSource.filter = filterValue;
   }
 
-  goToDesc() {
-    //TODO
-    //vai receber um id
-    this.router.navigate(['/description']);
+  goToDesc(id: string) {
+    let search = '/description/' + id;
+    this.router.navigate([search]);
   }
 
   //TAB SELECTION
   showFavorites() {
     console.log("Show Favorites");
     this.favoritesHidden = false;
-    this.plannedHidden = true;
+    //this.plannedHidden = true;
     this.shoppingListHidden = true;
 
-    //TODO
     //Fetch recipes
+    this.getFavorites();
   }
 
+  showShoppingList() {
+    console.log("Show Shopping List");
+    this.favoritesHidden = true;
+    //this.plannedHidden = true;
+    this.shoppingListHidden = false;
+
+    //Fetch Shopping list
+    this.getShoppingList();
+  }
+
+  //GETS
+  getShoppingList() {
+    this.pservice.getList().subscribe(
+      data => {
+        this.ingredients = data;
+        //console.log(this.ingredients);
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  getFavorites() {
+    this.pservice.getFav().subscribe(
+      data => {
+        this.recipes = data;
+        console.log(this.recipes);
+        console.log("-")
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  /*
+  //TODO
   showPlanned() {
     console.log("Show Planned");
     this.favoritesHidden = true;
@@ -80,44 +114,6 @@ export class ProfileComponent implements OnInit {
 
     //TODO
     //Fetch Planned
-  }
+  }*/
 
-  showShoppingList() {
-    console.log("Show Shopping List");
-    this.favoritesHidden = true;
-    this.plannedHidden = true;
-    this.shoppingListHidden = false;
-
-    //TODO
-    //Fetch Shopping list
-  }
-
-
-}
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
-}
-
-/** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
 }
