@@ -67,25 +67,25 @@
                     <!-- Dificulty -->
                     <div class="col-md-5">
                         <div class="row">
-                                <label>Dificuldade: </label>
-                                <div class="dificulty" *ngIf="dificulty[0]==1">
-                                        <img  src="assets/images/icon/chef_active.png" (click) = "dificulty=[0,0,0]" height="30" width="30">
-                                </div>
-                                <div class="dificulty" *ngIf="dificulty[0]==0">
-                                        <img src="assets/images/icon/chef_disable.png" (click) = "dificulty=[1,0,0]" height="30" width="30">
-                                </div>
-                                <div class="dificulty" *ngIf="dificulty[1]==1">
-                                        <img src="assets/images/icon/chef_active.png" (click) = "dificulty=[1,1,0]" height="30" width="30">
-                                </div>
-                                <div class="dificulty" *ngIf="dificulty[1]==0">
-                                        <img src="assets/images/icon/chef_disable.png" (click) = "dificulty=[1,1,0]" height="30" width="30">
-                                </div>
-                                <div class="dificulty" *ngIf="dificulty[2]==1">
-                                        <img src="assets/images/icon/chef_active.png" (click) = "dificulty=[1,1,1]" height="30" width="30">
-                                </div>
-                                <div class="dificulty" *ngIf="dificulty[2]==0">
-                                        <img src="assets/images/icon/chef_disable.png" (click) = "dificulty=[1,1,1]" height="30" width="30">
-                                </div>
+                            <label>Dificuldade: </label>
+                            <div class="dificulty" *ngIf="dificulty[0]==1">
+                                <img src="assets/images/icon/chef_active.png" (click)="dificulty=[0,0,0]" height="30" width="30">
+                            </div>
+                            <div class="dificulty" *ngIf="dificulty[0]==0">
+                                <img src="assets/images/icon/chef_disable.png" (click)="dificulty=[1,0,0]" height="30" width="30">
+                            </div>
+                            <div class="dificulty" *ngIf="dificulty[1]==1">
+                                <img src="assets/images/icon/chef_active.png" (click)="dificulty=[1,1,0]" height="30" width="30">
+                            </div>
+                            <div class="dificulty" *ngIf="dificulty[1]==0">
+                                <img src="assets/images/icon/chef_disable.png" (click)="dificulty=[1,1,0]" height="30" width="30">
+                            </div>
+                            <div class="dificulty" *ngIf="dificulty[2]==1">
+                                <img src="assets/images/icon/chef_active.png" (click)="dificulty=[1,1,1]" height="30" width="30">
+                            </div>
+                            <div class="dificulty" *ngIf="dificulty[2]==0">
+                                <img src="assets/images/icon/chef_disable.png" (click)="dificulty=[1,1,1]" height="30" width="30">
+                            </div>
                         </div>
                     </div>
                     <!-- Search -->
@@ -108,12 +108,20 @@
                 <h4 class="card-title">{{r.nome}}</h4>
                 <p class="card-text">{{r.descricao}}</p>
                 <div class="row">
-                    <div class="col">
-                        <button class="btn btn-primary" (click)="goToDesc(r._id)">Descrição</button>
+                    <div  class="col-4">
+                        <button type="button" class="round_btn btn btn-info btn-circle"><i class="fa fa-check"></i>
+                        </button>
                     </div>
-                    <button style="float:left" type="button" class="btn btn-danger btn-circle">
-                        <i class="fa fa-heart"></i>
-                    </button>
+                    <div class="col-4">
+                        <button type="button" (click)="goToDesc(r._id)" class=" round_btn btn btn-primary btn-circle"><i class="fa fa-list"></i>
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button type="button " class="round_btn btn btn-danger btn-circle ">
+                            <i class="fa fa-heart "></i>
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>

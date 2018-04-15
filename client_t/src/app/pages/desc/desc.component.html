@@ -1,16 +1,49 @@
 <div class="row">
-  <div class="col-3">
-    <div style="padding-bottom: 10px">
-      <!--ir buscar a imagem-->
-      <img class="card-img-top img-responsive" src={{json.img}} alt="comida">
-    </div>
-    <button class="btn btn-block btn-success">Adicionar a Favoritos</button> <!--TODO-->
-  </div>
-  <div class="col-9">
+
+  <!-- Lado Esquerdo -->
+  <div class="col-sm-6 col-md-5  col-lg-4">
     <div class="card">
       <div class="card-body">
-        <h2><b>{{json.nome}}</b></h2>
-        <p><i>{{json.descricao}}</i></p>
+        <div style="padding-bottom: 10px">
+          <!--ir buscar a imagem-->
+          <img class="card-img-top img-responsive" src={{json.img}} alt="comida">
+        </div>
+        <div class="row" style="margin: 0%">
+          <div style="margin: 0%" class="col-6">
+              <button style="width: 100%" class="btn btn-block btn-outline-danger"><i class="fa fa-heart"></i> Favoritos</button>
+          </div>
+          <div style="margin: 0%" class="col-6">
+              <button style="width: 100%" class="btn btn-block btn-outline-primary"><i class="fa fa-check"></i>Lista de Compras</button>
+            </div>
+        </div>
+          <!--TODO-->
+        <!--TODO-->
+        <hr style="padding-bottom: 10px; padding-top: 10px">
+
+        <h4>Ingredientes</h4>
+        <div style="padding-left: 30px;">
+          <table class="table">
+            <tbody>
+              <tr class="row" *ngFor="let ing of json.ingredientes">
+                <td class="col-4">{{ing.quantidade}} {{ing.unidade}}</td>
+                <td class="col-8">{{ing.desc}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr style="padding-bottom: 10px; padding-top: 10px">
+      </div>
+    </div>
+  </div>
+
+  <!-- Lado Direito -->
+  <div class="col" style="height: 100%">
+    <div class="card" style="height: 100%">
+      <div class="card-body" style="height: 100%">
+        <h1>{{json.nome}}</h1>
+        <p>
+          <i>{{json.descricao}}</i>
+        </p>
         <div class="row" style="padding-bottom: 5px; padding-top: 15px;">
           <div class="col-4">
             <h5 style="display: inline">Dificuldade : </h5>
@@ -32,20 +65,8 @@
             <p style="display: inline">{{json.restricoes}}</p>
           </div>
         </div>
-        <hr style="padding-bottom: 10px; padding-top: 10px" >
-        <h4>Ingredientes</h4>
-        <div style="padding-left: 30px;">
-          <table class="table" >
-            <tbody>
-              <tr *ngFor="let ing of json.ingredientes">
-                <td class="col-2">{{ing.quantidade}} {{ing.unidade}}</td>
-                <td class="col-10">{{ing.desc}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <button class="btn btn-warning">Adicionar a lista de compras</button> <!--TODO-->
-        </div>
-        <hr style="padding-bottom: 10px; padding-top: 10px" >
+        <hr style="padding-bottom: 10px; padding-top: 10px">
+
         <h4>Preparação</h4>
         <ul *ngFor="let prep of json.preparacao; let i = index" style="list-style-type: none;">
           <li>{{i+1}}. {{prep}}</li>

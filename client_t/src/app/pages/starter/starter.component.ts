@@ -13,7 +13,7 @@ export class StarterComponent implements AfterViewInit {
 	restriction = "";
 	recipes = [{ name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }, { name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }]; //examples
 	number_meals = 1;
-	dificulty = [1,0,0];
+	dificulty = [0,0,0];
 
 	constructor(public router: Router, private starterService: StarterService) {
 		this.getRecipes();
