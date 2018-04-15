@@ -99,7 +99,7 @@ router.post('/ingredientes', function (req, res) {
         }
         console.log(userResult)
 
-        return res.json(userResult[0]["receitas"])
+        return res.json(userResult[0]["carrinho"])
 
     })
 })
