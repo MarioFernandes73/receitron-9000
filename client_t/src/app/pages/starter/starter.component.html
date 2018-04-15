@@ -108,12 +108,14 @@
                 <h4 class="card-title">{{r.nome}}</h4>
                 <p class="card-text">{{r.descricao}}</p>
                 <div class="row">
-                    <div  class="col-4">
-                        <button type="button" class="round_btn btn btn-info btn-circle"><i class="fa fa-check"></i>
+                    <div class="col-4">
+                        <button type="button" class="round_btn btn btn-info btn-circle">
+                            <i class="fa fa-check"></i>
                         </button>
                     </div>
                     <div class="col-4">
-                        <button type="button" (click)="goToDesc(r._id)" class=" round_btn btn btn-primary btn-circle"><i class="fa fa-list"></i>
+                        <button type="button" (click)="goToDesc(r._id)" class=" round_btn btn btn-primary btn-circle">
+                            <i class="fa fa-list"></i>
                         </button>
                     </div>
                     <div class="col-4">
@@ -128,5 +130,14 @@
         <!-- Card -->
 
     </div>
+</div>
+
+<div class="col-md-12">
+
+    <button style="
+        position: relative;
+        left: 50%;
+        margin-left: -100px;" 
+    class="btn btn-info" (click)="getRecipes()">Load More...</button>
 
 </div>

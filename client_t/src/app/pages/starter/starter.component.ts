@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StarterService } from '../../services/starter.service';
+import { HostListener } from "@angular/core";
 
 @Component({
 	templateUrl: './starter.component.html',
@@ -11,19 +12,28 @@ export class StarterComponent implements AfterViewInit {
 	restrictions = [];
 	ingredient = "";
 	restriction = "";
-	recipes = [{ name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }, { name: "recipe 1" }, { name: "recipe 2" }, { name: "recipe 2" }]; //examples
+	recipes = []; //examples
 	number_meals = 1;
-	dificulty = [0,0,0];
+	dificulty = [0, 0, 0];
+	page = 0;
 
 	constructor(public router: Router, private starterService: StarterService) {
 		this.getRecipes();
+
+		let test = function () {
+			this.getRecipes();
+		}
+
+
 	}
 
 	//GETS
 	getRecipes() {
-		this.starterService.getRecipes().subscribe(
+		this.starterService.getRecipes(this.page += 1).subscribe(
 			data => {
-				this.recipes = data.docs;
+				data.docs.forEach(receita => {
+					this.recipes.push(receita);
+				})
 				console.log(data.docs)
 			},
 			err => {
@@ -42,11 +52,19 @@ export class StarterComponent implements AfterViewInit {
 
 		var dif_tmp = "qualquer";
 
-		if(this.dificulty == [1,0,0]) dif_tmp = "fácil";
-		else if(this.dificulty == [1,1,0]) dif_tmp = "média";
-		else if(this.dificulty == [1,1,1]) dif_tmp = "difícil";
+		if (this.dificulty[2] == 1) {
+			dif_tmp = "Difícil"
+		} else {
+			if (this.dificulty[1] == 1) {
+				dif_tmp = "Média"
+			} else {
+				if (this.dificulty[0] == 1) {
+					dif_tmp = "Fácil"
+				}
+			}
+		}
 
-		if (dif_tmp === "qualquer") {
+		if (dif_tmp == "qualquer") {
 			jsondata = {
 				"ingredientes": this.ingredients,
 				"restricoes": this.restrictions,

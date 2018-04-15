@@ -10,8 +10,8 @@ export class StarterService {
   constructor(private http: Http) { }
 
   //Get todas as receitas
-  getRecipes() {
-    var url = this.api_endpoint + 'api/receita/page/1';
+  getRecipes(page:number) {
+    var url = this.api_endpoint + 'api/receita/page/' + page;
     return this.http.get(url).map(res => res.json());
   }
 
