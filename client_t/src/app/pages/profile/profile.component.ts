@@ -29,12 +29,12 @@ export class ProfileComponent implements OnInit {
 
   constructor(public router: Router) {
     //ALTERAR DEPOIS
-     // Create 100 users
+    // Create 100 users
      const users: UserData[] = [];
      for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
- 
-     // Assign the data to the data source for the table to render
-     this.dataSource = new MatTableDataSource(users);
+
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(users);
   }
 
   ngOnInit() {
@@ -57,9 +57,9 @@ export class ProfileComponent implements OnInit {
 
   goToDesc() {
     //TODO
-		//vai receber um id
-		this.router.navigate(['/description']);
-	}
+    //vai receber um id
+    this.router.navigate(['/description']);
+  }
 
   //TAB SELECTION
   showFavorites() {
@@ -92,13 +92,13 @@ export class ProfileComponent implements OnInit {
     //Fetch Shopping list
   }
 
-  
+
 }
 /** Builds and returns a new User. */
 function createNewUser(id: number): UserData {
   const name =
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+    NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
+    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
 
   return {
     id: id.toString(),

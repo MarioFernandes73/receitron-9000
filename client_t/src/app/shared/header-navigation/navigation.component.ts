@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ap-navigation',
@@ -8,7 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 export class NavigationComponent implements AfterViewInit {
 	name:string;
   
-  	constructor() {}
+  	constructor(private router: Router) {}
 
     // This is for Notifications
     notifications: Object[] = [{
@@ -94,5 +95,9 @@ export class NavigationComponent implements AfterViewInit {
         
 
         $("body").trigger("resize");
+    }
+
+    goToPerfil(){
+        this.router.navigate(['profile']);
     }
 }
