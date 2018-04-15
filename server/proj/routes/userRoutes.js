@@ -64,12 +64,17 @@ router.post('/addFavourite', function (req, res) {
 
 router.post('/addIngrediente', function (req, res) {
     User.find({ name: req.body["username"] }, function (err, userResult) {
+        console.log(req.body)
         if (err) {
             return res.send(err);
         }
         console.log(userResult)
         if (req.body["ingrediente"]) {
-            userResult[0]["carrinho"].push(req.body["ingrediente"])
+            req.body.ingrediente.forEach(each =>{
+                console.log(each);
+                userResult[0]["carrinho"].push(each);
+            })
+            
             userResult[0].save(function (err) {
                 if (err) {
                     return res.send(err);
@@ -77,6 +82,7 @@ router.post('/addIngrediente', function (req, res) {
                 return res.json({ "status": 200, "message": "Added ingrediente to user's little car" });
             })
         }
+        //return res.send("no ingredients");
     })
 })
 
@@ -86,8 +92,22 @@ router.post('/receitas', function (req, res) {
             return res.send(err);
         }
         console.log(userResult)
+        result = [];
+        let length = userResult[0]["receitasFavoritas"].length;
+        let curr = 0;
 
-        return res.json(userResult[0]["receitasFavoritas"])
+        userResult[0]["receitasFavoritas"].forEach(receita =>{
+            Receita.find({"_id": receita}, function(err, receitaEncontrada){
+                if(err){
+                    return res.send(err);
+                }
+                result.push(receitaEncontrada[0]);
+                curr++;
+                if(curr >= length){
+                    return res.json(result);
+                }
+            })
+        })
 
     })
 })
