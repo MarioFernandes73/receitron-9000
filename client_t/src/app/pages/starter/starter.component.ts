@@ -9,10 +9,10 @@ import { HostListener } from "@angular/core";
 })
 export class StarterComponent implements AfterViewInit {
 	ingredients = [];
-	restrictions = [];
 	ingredient = "";
-	restriction = "";
-	recipes = []; //examples
+	restrictionList = [];
+	currentRestricion = "";
+	recipes = [];
 	number_meals = 1;
 	dificulty = [0, 0, 0];
 	page = 0;
@@ -20,12 +20,20 @@ export class StarterComponent implements AfterViewInit {
 	constructor(public router: Router, private starterService: StarterService) {
 		this.getRecipes();
 
-		let test = function () {
-			this.getRecipes();
-		}
-
-
+		this.getRestrictions();
+3
 	}
+
+	getRestrictions(){
+		this.starterService.getRestrictions().subscribe(
+			data => {
+				this.restrictionList = data;
+			},
+			err => {
+				console.log(err)
+			});
+	}
+
 
 	//GETS
 	getRecipes() {
@@ -43,10 +51,9 @@ export class StarterComponent implements AfterViewInit {
 
 	postFilteredRecipes() {
 		let jsondata: any;
-
 		console.log("------")
 		console.log(this.ingredients)
-		console.log(this.restrictions)
+		console.log(this.currentRestricion)
 		console.log(this.dificulty)
 		console.log("------")
 
@@ -67,17 +74,19 @@ export class StarterComponent implements AfterViewInit {
 		if (dif_tmp == "qualquer") {
 			jsondata = {
 				"ingredientes": this.ingredients,
-				"restricoes": this.restrictions,
+				"restricoes": [this.currentRestricion],
 			}
 		}
 		else {
 			jsondata = {
 				"ingredientes": this.ingredients,
-				"restricoes": this.restrictions,
+				"restricoes": [this.currentRestricion],
 				"dificuldade": dif_tmp
 				//outros?
 			}
 		}
+
+		console.log(jsondata)
 
 		this.starterService.postFilteredRecipes(jsondata).subscribe(
 			data => {
@@ -103,7 +112,7 @@ export class StarterComponent implements AfterViewInit {
 	addIngredient() {
 		console.log(this.ingredient);
 		if (this.notIn(this.ingredient, this.ingredients) && this.ingredient != "" &&
-			this.notIn(this.ingredient, this.restrictions)) {
+			this.notIn(this.ingredient, [this.currentRestricion])) {
 			console.log("ingredient added: " + this.ingredient);
 			this.ingredients.push(this.ingredient);
 			this.ingredient = "";
@@ -117,7 +126,7 @@ export class StarterComponent implements AfterViewInit {
 		}
 		console.log("Removed ingredient: " + ingredient);
 	}
-
+/*
 	addRestriction() {
 		console.log(this.restriction);
 		if (this.notIn(this.restriction, this.ingredients) && this.restriction != "" &&
@@ -135,7 +144,7 @@ export class StarterComponent implements AfterViewInit {
 		}
 		console.log("Removed restriction: " + restriction);
 	}
-
+*/
 	mouseEnterIngredient(ingredient) {
 		console.log("ENTER ELEMENT");
 		//(<HTMLInputElement>document.getElementById(ingredient)).value = "Apagar";

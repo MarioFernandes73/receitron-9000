@@ -21,4 +21,9 @@ export class StarterService {
     return this.http.post(url, data).map(res => res.json());
   }
 
+  getRestrictions() {
+    var url = this.api_endpoint + 'api/receita/restrictions';
+    return this.http.get(url).map(res => res.json())
+  }
+
 }

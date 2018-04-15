@@ -34,7 +34,7 @@
                     </div>
                     <!-- Restrictions -->
                     <div class="col-md-6">
-                        <div class="row">
+                       <!-- <div class="row">
                             <div class="col-md-8">
                                 <mat-form-field class="example-full-width">
                                     <input matInput placeholder="Restrições" [value]="restriction" (input)="restriction = $event.target.value">
@@ -49,7 +49,15 @@
                                 <button type="button" class="restrictions-btn btn btn-rounded btn-info" (click)="removeRestriction(r)">{{r}}</button>
                                 <br>
                             </div>
-                        </div>
+                        </div>-->
+
+                        <mat-form-field class="example-full-width">
+                            <mat-select placeholder="Restrições" [(ngModel)]="currentRestricion">
+                                <mat-option *ngFor="let food of restrictionList" [value]="food">
+                                    {{ food }}
+                                  </mat-option>
+                            </mat-select>
+                          </mat-form-field>
                     </div>
                 </div>
 
